@@ -78,21 +78,23 @@ static int64_t get_current_time(void)
 static time_t format_raw_time(char * str_time, int64_t * ms)
 {
     time_t time = 0;
+    int index = 0;
+    int str_length = strlen(str_time);
     if (str_time == NULL)
     {
         return time;
     }
 
-    char result_time[MAX_RESULT_LENGTH];
-    for (int i = 0, j = 0; i < strlen(str_time); i++)
+    for (int i = 0; i < str_length; i++)
     {
         if (str_time[i] >= '0' && str_time[i] <= '9')
         {
-            result_time[j++] = str_time[i];
+            str_time[index++] = str_time[i];
         }
     }
 
-    time = atol(result_time);
+    str_time[index] = '\0';
+    time = atol(str_time);
     if (ms == NULL)
     {
         return time;
