@@ -16,7 +16,6 @@
 #define pri_info(format, args...)   printf("[%s:%d] " format, __FILE__, __LINE__, ##args)
 #endif
 
-static int64_t get_current_time(void);
 static time_t format_raw_time(char * str_time, int64_t * ms);
 static void get_format_time(char * buffer, time_t time);
 
@@ -68,19 +67,12 @@ int main(int argc, char * argv[])
     return 0;
 }
 
-static int64_t get_current_time(void)
-{
-   struct timeval tv;
-   gettimeofday(&tv,NULL);
-   return tv.tv_sec * 1000 + tv.tv_usec / 1000;
-}
-
 static time_t format_raw_time(char * str_time, int64_t * ms)
 {
     time_t time = 0;
     int index = 0;
     int str_length = strlen(str_time);
-    if (str_time == NULL)
+    if (str_time == NULL || str_length >= MAX_RESULT_LENGTH)
     {
         return time;
     }
