@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #define MAX_RESULT_LENGTH           128
-#define USEAGE_INFO                 "Useage: strftime [options] unixTime \n" \
+#define USEAGE_INFO                 "usage: strftime [options] unixTime \n" \
                                     "-s     time    Time is second of unix time.\n" \
                                     "-m     time    Time is millisecond of unix time."
 
@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
     char buffer[MAX_RESULT_LENGTH];
 
     opterr = 0;
-    while((ch = getopt(argc, argv, "s:m:")) != -1)
+    while((ch = getopt(argc, argv, "s:m:h")) != -1)
     {
         switch(ch)
         {
@@ -37,6 +37,10 @@ int main(int argc, char * argv[])
                 break;
             case 'm':
                 opt_time = format_raw_time(optarg, &ms);
+                break;
+            case 'h':
+                pri_info("%s\n", USEAGE_INFO);
+                return -1;
                 break;
             default:
                 pri_info("invalid option: %c\n", optopt);
